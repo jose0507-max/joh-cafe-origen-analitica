@@ -38,7 +38,7 @@ const ticketPromedio = (ventas) => {
     for (const venta of ventas) {
         if (venta.cantidad > 0) {
             acum = acum + venta.precio;
-            cont = cont + 1; 
+            cont = cont + 1;
         }
     }
     return acum / cont;
@@ -55,6 +55,40 @@ const ventasPorCiudad = (ventas, ciudad) => {
 }
 
 const ventas = require('./datos');
-console.log(ventasPorCiudad(ventas, 'Bucaramanga'));
 
-module.exports = { valorVenta, totalVendido, unidadesVendidas, ventaMayor, ticketPromedio, ventasPorCiudad };
+const totalVendidoM = (ventas) => {
+    return ventas.reduce((acum, v) => acum + (v.cantidad * v.precio), 0);
+}
+
+const unidadesVendidasM = (ventas) => {
+    return ventas.reduce((acum, v) => acum + v.cantidad, 0);
+}
+
+const ventasPorCiudadM = (ventas, ciudad) => {
+    return ventas.filter(v => v.ciudad.toLowerCase() === ciudad.toLowerCase()).length;
+}
+
+
+const totalPorciudad = (ventas) => {
+    const ciudadesUnicas = [...new Set(ventas.map(v => v.ciudad))];
+
+    return ciudadesUnicas.map(ciudad => {
+        const vendido = ventas
+            .filter(v => v.ciudad.trim().toLowerCase() === ciudad.trim().toLowerCase())
+            .reduce((acum, v) => acum + (v.precio * v.cantidad), 0);
+
+        return { ciudad, vendido };
+    });
+};
+
+module.exports = {
+    valorVenta,
+    totalVendido,
+    unidadesVendidas,
+    ventaMayor,
+    ticketPromedio,
+    ventasPorCiudad,
+    totalVendidoM,
+    unidadesVendidasM,
+    ventasPorCiudadM
+};
