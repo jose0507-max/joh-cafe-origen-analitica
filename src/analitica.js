@@ -65,7 +65,7 @@ const unidadesVendidasM = (ventas) => {
 };
 
 const ventasPorCiudadM = (ventas, ciudad) => {
-  return ventas.filter((v) => v.ciudad.toLowerCase() === ciudad.toLowerCase())
+  return ventas.filter(v => v.ciudad.toLowerCase() === ciudad.toLowerCase())
     .length;
 };
 
@@ -75,7 +75,7 @@ const totalPorCiudad = (ventas) => {
   return ciudadesUnicas.map((ciudad) => {
     const vendido = ventas
       .filter(
-        (v) => v.ciudad.trim().toLowerCase() === ciudad.trim().toLowerCase(),
+        v => v.ciudad.trim().toLowerCase() === ciudad.trim().toLowerCase(),
       )
       .reduce((acum, v) => acum + v.precio * v.cantidad, 0);
     return { ciudad, vendido };
@@ -87,9 +87,7 @@ const unidadesPorProducto = (ventas) => {
 
   return productosUnicos.map((producto) => {
     const cantidadTotal = ventas
-      .filter(
-        (v) =>
-          v.producto.trim().toLowerCase() === producto.trim().toLowerCase(),
+      .filter(v => v.producto.trim().toLowerCase() === producto.trim().toLowerCase(),
       )
       .reduce((acum, v) => acum + v.cantidad, 0);
 
@@ -107,7 +105,7 @@ const topProductosPorValor = (ventas, k) => {
     }
     const precios = arrayProductos.map((producto) => {
       const productos = ventas.filter(
-        (v) =>
+        v =>
           v.producto.trim().toLowerCase() === producto.trim().toLowerCase(),
       );
 
@@ -136,6 +134,16 @@ const topProductosPorValor = (ventas, k) => {
   }
 };
 
+const ventasDelDia = (ventas, fecha) =>{
+  console.log("Resumen del día: ", fecha);
+  const vendidoHoy = ventas
+  .filter(v => v.fecha == fecha)
+  .reduce((acum, v) => acum + (v.precio * v.cantidad), 0)
+  console.log("Vendido hoy: ", vendidoHoy)
+}
+
+
+
 module.exports = {
   valorVenta,
   totalVendido,
@@ -149,4 +157,5 @@ module.exports = {
   totalPorCiudad,
   unidadesPorProducto,
   topProductosPorValor,
+  ventasDelDia
 };
