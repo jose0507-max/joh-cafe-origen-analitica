@@ -1,3 +1,4 @@
+
 const ventas = require('./datos');
 const {
     totalVendido,

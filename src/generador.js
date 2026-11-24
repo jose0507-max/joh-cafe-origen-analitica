@@ -25,3 +25,5 @@ const generarVentas = (cantidad) => {
 };
 
 console.log(generarVentas(2));
+
+module.exports = generarVentas;

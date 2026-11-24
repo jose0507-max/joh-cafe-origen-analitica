@@ -109,8 +109,8 @@ const topProductosPorValor = (ventas, k) => {
           v.producto.trim().toLowerCase() === producto.trim().toLowerCase(),
       );
 
-        arrayPrecios.push(productos[0].precio);
-   
+      arrayPrecios.push(productos[0].precio);
+
     });
     for (let i = 0; i < arrayPrecios.length - 1; i++) {
       for (let j = i + 1; j < arrayPrecios.length; j++) {
@@ -134,13 +134,71 @@ const topProductosPorValor = (ventas, k) => {
   }
 };
 
-const ventasDelDia = (ventas, fecha) =>{
+const ventasDelDia = (ventas, fecha) => {
   console.log("Resumen del día: ", fecha);
   const vendidoHoy = ventas
-  .filter(v => v.fecha == fecha)
-  .reduce((acum, v) => acum + (v.precio * v.cantidad), 0)
+    .filter(v => v.fecha == fecha)
+    .reduce((acum, v) => acum + (v.precio * v.cantidad), 0)
   console.log("Vendido hoy: ", vendidoHoy)
 }
+const totalVendidoI = (ventas, contador) => {
+  let acum = 0;
+
+  for (const venta of ventas) {
+    contador.visitas++;
+    acum += venta.cantidad * venta.precio;
+  }
+
+  return acum;
+};
+
+const ventaMayorI = (ventas, contador) => {
+  let may = -Infinity;
+
+  for (const venta of ventas) {
+    contador.visitas++;
+    contador.comparaciones++;
+
+    if (venta.precio > may) {
+      may = venta.precio;
+    }
+  }
+
+  for (const venta of ventas) {
+    contador.visitas++;
+    contador.comparaciones++;
+
+    if (venta.precio === may) {
+      // Encontramos una venta con el precio mayor.
+    }
+  }
+
+  return may;
+};
+
+const totalPorCiudadI = (ventas, contador) => {
+  const ciudadesUnicas = [...new Set(ventas.map(v => {
+    contador.visitas++;
+    return v.ciudad;
+  }))];
+
+  return ciudadesUnicas.map(ciudad => {
+    const vendido = ventas
+      .filter(v => {
+        contador.visitas++;
+        contador.comparaciones++;
+
+        return v.ciudad.trim().toLowerCase() ===
+          ciudad.trim().toLowerCase();
+      })
+      .reduce((acum, v) => {
+        contador.visitas++;
+        return acum + (v.precio * v.cantidad);
+      }, 0);
+
+    return { ciudad, vendido };
+  });
+};
 
 
 
@@ -157,5 +215,8 @@ module.exports = {
   totalPorCiudad,
   unidadesPorProducto,
   topProductosPorValor,
-  ventasDelDia
+  ventasDelDia,
+  totalPorCiudadI,
+  totalVendidoI,
+  ventaMayorI
 };

@@ -1,3 +1,4 @@
+
 /*Array antes de detectar problemas
 const ventas = [
     {id: 1, cliente: "C01", producto: "Origen Huila 500 g", ciudad: "Medellín", cantidad: 2, precio: 42.000},
@@ -17,6 +18,8 @@ const ventas = [
 */
 
 //Array despúes de ejecutar las desiciones
+
+const generador = require("./generador")
     const ventas = [
     {id: 1, cliente: "C01", producto: "Origen Huila 500 g", ciudad: "Medellín", cantidad: 2, precio: 42000, fecha: "2026-11-20"},
     {id: 2, cliente: "C02", producto: "Origen Nariño 250 g", ciudad: "Bogotá", cantidad: 1, precio: 26000, fecha: "2026-11-20"},
@@ -32,7 +35,6 @@ const ventas = [
     {id: 12, cliente: "C04", producto: "Origen Quindío 250 g", ciudad: "Barranquilla", cantidad: 2, precio: 24000, fecha: "2026-11-24"}
 ];
 
-module.exports = ventas;
     
 
 module.exports = ventas;
