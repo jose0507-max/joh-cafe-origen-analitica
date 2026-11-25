@@ -199,8 +199,26 @@ const totalPorCiudadI = (ventas, contador) => {
     return { ciudad, vendido };
   });
 };
+function clientesRecurrentes(ventas) {
+  const recurrentes = [];
+  let visitas = 0;
+  let comparaciones = 0;
 
+  for (let i = 0; i < ventas.length; i++) {
+    visitas++
+    for (let j = i + 1; j < ventas.length; j++) {
+      visitas++
+      comparaciones++;
 
+      if (ventas[i].cliente === ventas[j].cliente &&
+        !recurrentes.includes(ventas[i].cliente)) {
+        recurrentes.push(ventas[i].cliente);
+      }
+    }
+  }
+
+  return { recurrentes, visitas, comparaciones };
+}
 
 module.exports = {
   valorVenta,
@@ -218,5 +236,6 @@ module.exports = {
   ventasDelDia,
   totalPorCiudadI,
   totalVendidoI,
-  ventaMayorI
+  ventaMayorI,
+  clientesRecurrentes
 };
