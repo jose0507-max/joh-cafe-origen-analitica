@@ -1,241 +1,260 @@
-const valorVenta = (venta) => {
-  return venta.cantidad * venta.precio;
-};
+  const valorVenta = (venta) => {
+    return venta.cantidad * venta.precio;
+  };
 
-const totalVendido = (ventas) => {
-  let acum = 0;
-  for (const venta of ventas) {
-    acum = venta.cantidad * venta.precio + acum;
-  }
-  return acum;
-};
-
-const unidadesVendidas = (ventas) => {
-  let acum = 0;
-  for (const venta of ventas) {
-    acum = acum + venta.cantidad;
-  }
-  return acum;
-};
-
-const ventaMayor = (ventas) => {
-  let may = -Infinity;
-  for (const venta of ventas) {
-    if (venta.precio > may) {
-      may = venta.precio;
+  const totalVendido = (ventas) => {
+    let acum = 0;
+    for (const venta of ventas) {
+      acum = venta.cantidad * venta.precio + acum;
     }
-  }
-  ventas.forEach((venta) => {
-    if (venta.precio == may) {
-      console.log(venta);
+    return acum;
+  };
+
+  const unidadesVendidas = (ventas) => {
+    let acum = 0;
+    for (const venta of ventas) {
+      acum = acum + venta.cantidad;
     }
-  });
-};
+    return acum;
+  };
 
-const ticketPromedio = (ventas) => {
-  let acum = 0;
-  let cont = 0;
-  for (const venta of ventas) {
-    if (venta.cantidad > 0) {
-      acum = acum + venta.precio;
-      cont = cont + 1;
+  const ventaMayor = (ventas) => {
+    let may = -Infinity;
+    for (const venta of ventas) {
+      if (venta.precio > may) {
+        may = venta.precio;
+      }
     }
-  }
-  return acum / cont;
-};
-
-const ventasPorCiudad = (ventas, ciudad) => {
-  let cont = 0;
-  for (const venta of ventas) {
-    if (venta.ciudad.toLowerCase() == ciudad.toLowerCase()) {
-      cont = cont + 1;
-    }
-  }
-  return cont;
-};
-
-const ventas = require("./datos");
-
-const totalVendidoM = (ventas) => {
-  return ventas.reduce((acum, v) => acum + v.cantidad * v.precio, 0);
-};
-
-const unidadesVendidasM = (ventas) => {
-  return ventas.reduce((acum, v) => acum + v.cantidad, 0);
-};
-
-const ventasPorCiudadM = (ventas, ciudad) => {
-  return ventas.filter(v => v.ciudad.toLowerCase() === ciudad.toLowerCase())
-    .length;
-};
-
-const totalPorCiudad = (ventas) => {
-  const ciudadesUnicas = [...new Set(ventas.map((v) => v.ciudad))];
-
-  return ciudadesUnicas.map((ciudad) => {
-    const vendido = ventas
-      .filter(
-        v => v.ciudad.trim().toLowerCase() === ciudad.trim().toLowerCase(),
-      )
-      .reduce((acum, v) => acum + v.precio * v.cantidad, 0);
-    return { ciudad, vendido };
-  });
-};
-
-const unidadesPorProducto = (ventas) => {
-  const productosUnicos = [...new Set(ventas.map((v) => v.producto))];
-
-  return productosUnicos.map((producto) => {
-    const cantidadTotal = ventas
-      .filter(v => v.producto.trim().toLowerCase() === producto.trim().toLowerCase(),
-      )
-      .reduce((acum, v) => acum + v.cantidad, 0);
-
-    return { producto, cantidadTotal };
-  });
-};
-
-const topProductosPorValor = (ventas, k) => {
-  const productosUnicos = [...new Set(ventas.map((v) => v.producto))];
-  let arrayPrecios = [];
-  if (k <= productosUnicos.length && k > 0) {
-    let arrayProductos = [];
-    for (let i = 0; i < k; i++) {
-      arrayProductos[i] = productosUnicos[i];
-    }
-    const precios = arrayProductos.map((producto) => {
-      const productos = ventas.filter(
-        v =>
-          v.producto.trim().toLowerCase() === producto.trim().toLowerCase(),
-      );
-
-      arrayPrecios.push(productos[0].precio);
-
+    ventas.forEach((venta) => {
+      if (venta.precio == may) {
+        console.log(venta);
+      }
     });
-    for (let i = 0; i < arrayPrecios.length - 1; i++) {
-      for (let j = i + 1; j < arrayPrecios.length; j++) {
-        if (arrayPrecios[i] < arrayPrecios[j]) {
-          let aux = arrayPrecios[i];
-          arrayPrecios[i] = arrayPrecios[j];
-          arrayPrecios[j] = aux;
+  };
 
-          aux = arrayProductos[i];
-          arrayProductos[i] = arrayProductos[j];
-          arrayProductos[j] = aux;
+  const ticketPromedio = (ventas) => {
+    let acum = 0;
+    let cont = 0;
+    for (const venta of ventas) {
+      if (venta.cantidad > 0) {
+        acum = acum + venta.precio;
+        cont = cont + 1;
+      }
+    }
+    return acum / cont;
+  };
+
+  const ventasPorCiudad = (ventas, ciudad) => {
+    let cont = 0;
+    for (const venta of ventas) {
+      if (venta.ciudad.toLowerCase() == ciudad.toLowerCase()) {
+        cont = cont + 1;
+      }
+    }
+    return cont;
+  };
+
+  const ventas = require("./datos");
+
+  const totalVendidoM = (ventas) => {
+    return ventas.reduce((acum, v) => acum + v.cantidad * v.precio, 0);
+  };
+
+  const unidadesVendidasM = (ventas) => {
+    return ventas.reduce((acum, v) => acum + v.cantidad, 0);
+  };
+
+  const ventasPorCiudadM = (ventas, ciudad) => {
+    let visitas = 0;
+    let arreglos = 0;
+    const vendido = ventas
+    .filter(v => v.ciudad.toLowerCase() === ciudad.toLowerCase())
+    .reduce((acum, v) => acum + (v.precio * v.cantidad), 0)
+      return {ciudad, vendido}
+  };
+
+  const totalPorCiudad = (ventas) => {
+    const ciudadesUnicas = [...new Set(ventas.map((v) => v.ciudad))];
+
+    return ciudadesUnicas.map((ciudad) => {
+      const vendido = ventas
+        .filter(
+          v => v.ciudad.trim().toLowerCase() === ciudad.trim().toLowerCase(),
+        )
+        .reduce((acum, v) => acum + v.precio * v.cantidad, 0);
+      return { ciudad, vendido };
+    });
+  };
+
+  const unidadesPorProducto = (ventas) => {
+    const productosUnicos = [...new Set(ventas.map((v) => v.producto))];
+
+    return productosUnicos.map((producto) => {
+      const cantidadTotal = ventas
+        .filter(v => v.producto.trim().toLowerCase() === producto.trim().toLowerCase(),
+        )
+        .reduce((acum, v) => acum + v.cantidad, 0);
+
+      return { producto, cantidadTotal };
+    });
+  };
+
+  const topProductosPorValor = (ventas, k) => {
+    const productosUnicos = [...new Set(ventas.map((v) => v.producto))];
+    let arrayPrecios = [];
+    if (k <= productosUnicos.length && k > 0) {
+      let arrayProductos = [];
+      for (let i = 0; i < k; i++) {
+        arrayProductos[i] = productosUnicos[i];
+      }
+      const precios = arrayProductos.map((producto) => {
+        const productos = ventas.filter(
+          v =>
+            v.producto.trim().toLowerCase() === producto.trim().toLowerCase(),
+        );
+
+        arrayPrecios.push(productos[0].precio);
+
+      });
+      for (let i = 0; i < arrayPrecios.length - 1; i++) {
+        for (let j = i + 1; j < arrayPrecios.length; j++) {
+          if (arrayPrecios[i] < arrayPrecios[j]) {
+            let aux = arrayPrecios[i];
+            arrayPrecios[i] = arrayPrecios[j];
+            arrayPrecios[j] = aux;
+
+            aux = arrayProductos[i];
+            arrayProductos[i] = arrayProductos[j];
+            arrayProductos[j] = aux;
+          }
+        }
+      }
+      let preciosUnicos = [...new Set(arrayPrecios)];
+      return { preciosUnicos, arrayProductos };
+    } else {
+      return {
+        error: "La cantidad es inválida o está fuera del límite de productos",
+      };
+    }
+  };
+
+  const ventasDelDia = (ventas, fecha) => {
+    console.log("Resumen del día: ", fecha);
+    const vendidoHoy = ventas
+      .filter(v => v.fecha == fecha)
+      .reduce((acum, v) => acum + (v.precio * v.cantidad), 0)
+    console.log("Vendido hoy: ", vendidoHoy)
+  }
+  const totalVendidoI = (ventas, contador) => {
+    let acum = 0;
+
+    for (const venta of ventas) {
+      contador.visitas++;
+      acum += venta.cantidad * venta.precio;
+    }
+
+    return acum;
+  };
+
+  const ventaMayorI = (ventas, contador) => {
+    let may = -Infinity;
+
+    for (const venta of ventas) {
+      contador.visitas++;
+      contador.comparaciones++;
+
+      if (venta.precio > may) {
+        may = venta.precio;
+      }
+    }
+
+    for (const venta of ventas) {
+      contador.visitas++;
+      contador.comparaciones++;
+
+      if (venta.precio === may) {
+        // Encontramos una venta con el precio mayor.
+      }
+    }
+
+    return may;
+  };
+
+  const totalPorCiudadI = (ventas, contador) => {
+    const ciudadesUnicas = [...new Set(ventas.map(v => {
+      contador.visitas++;
+      return v.ciudad;
+    }))];
+
+    return ciudadesUnicas.map(ciudad => {
+      const vendido = ventas
+        .filter(v => {
+          contador.visitas++;
+          contador.comparaciones++;
+
+          return v.ciudad.trim().toLowerCase() ===
+            ciudad.trim().toLowerCase();
+        })
+        .reduce((acum, v) => {
+          contador.visitas++;
+          return acum + (v.precio * v.cantidad);
+        }, 0);
+
+      return { ciudad, vendido };
+    });
+  };
+
+  const ciudadUnaPasada = (ventas, ciudad) => {
+    let vendido = 0;
+
+    for (let v of ventas) {
+      if (v.ciudad.trim().toLowerCase() == ciudad.trim().toLowerCase()) {
+        vendido += v.precio * v.cantidad;
+      }
+
+    }
+    return { ciudad, vendido }
+
+  }
+
+  function clientesRecurrentes(ventas) {
+    const recurrentes = [];
+    let visitas = 0;
+    let comparaciones = 0;
+
+    for (let i = 0; i < ventas.length; i++) {
+      visitas++
+      for (let j = i + 1; j < ventas.length; j++) {
+        visitas++
+        comparaciones++;
+
+        if (ventas[i].cliente === ventas[j].cliente &&
+          !recurrentes.includes(ventas[i].cliente)) {
+          recurrentes.push(ventas[i].cliente);
         }
       }
     }
-    let preciosUnicos = [...new Set(arrayPrecios)];
-    return { preciosUnicos, arrayProductos };
-  } else {
-    return {
-      error: "La cantidad es inválida o está fuera del límite de productos",
-    };
-  }
-};
 
-const ventasDelDia = (ventas, fecha) => {
-  console.log("Resumen del día: ", fecha);
-  const vendidoHoy = ventas
-    .filter(v => v.fecha == fecha)
-    .reduce((acum, v) => acum + (v.precio * v.cantidad), 0)
-  console.log("Vendido hoy: ", vendidoHoy)
-}
-const totalVendidoI = (ventas, contador) => {
-  let acum = 0;
-
-  for (const venta of ventas) {
-    contador.visitas++;
-    acum += venta.cantidad * venta.precio;
+    return { recurrentes, visitas, comparaciones };
   }
 
-  return acum;
-};
-
-const ventaMayorI = (ventas, contador) => {
-  let may = -Infinity;
-
-  for (const venta of ventas) {
-    contador.visitas++;
-    contador.comparaciones++;
-
-    if (venta.precio > may) {
-      may = venta.precio;
-    }
-  }
-
-  for (const venta of ventas) {
-    contador.visitas++;
-    contador.comparaciones++;
-
-    if (venta.precio === may) {
-      // Encontramos una venta con el precio mayor.
-    }
-  }
-
-  return may;
-};
-
-const totalPorCiudadI = (ventas, contador) => {
-  const ciudadesUnicas = [...new Set(ventas.map(v => {
-    contador.visitas++;
-    return v.ciudad;
-  }))];
-
-  return ciudadesUnicas.map(ciudad => {
-    const vendido = ventas
-      .filter(v => {
-        contador.visitas++;
-        contador.comparaciones++;
-
-        return v.ciudad.trim().toLowerCase() ===
-          ciudad.trim().toLowerCase();
-      })
-      .reduce((acum, v) => {
-        contador.visitas++;
-        return acum + (v.precio * v.cantidad);
-      }, 0);
-
-    return { ciudad, vendido };
-  });
-};
-function clientesRecurrentes(ventas) {
-  const recurrentes = [];
-  let visitas = 0;
-  let comparaciones = 0;
-
-  for (let i = 0; i < ventas.length; i++) {
-    visitas++
-    for (let j = i + 1; j < ventas.length; j++) {
-      visitas++
-      comparaciones++;
-
-      if (ventas[i].cliente === ventas[j].cliente &&
-        !recurrentes.includes(ventas[i].cliente)) {
-        recurrentes.push(ventas[i].cliente);
-      }
-    }
-  }
-
-  return { recurrentes, visitas, comparaciones };
-}
-
-module.exports = {
-  valorVenta,
-  totalVendido,
-  unidadesVendidas,
-  ventaMayor,
-  ticketPromedio,
-  ventasPorCiudad,
-  totalVendidoM,
-  unidadesVendidasM,
-  ventasPorCiudadM,
-  totalPorCiudad,
-  unidadesPorProducto,
-  topProductosPorValor,
-  ventasDelDia,
-  totalPorCiudadI,
-  totalVendidoI,
-  ventaMayorI,
-  clientesRecurrentes
-};
+  module.exports = {
+    valorVenta,
+    totalVendido,
+    unidadesVendidas,
+    ventaMayor,
+    ticketPromedio,
+    ventasPorCiudad,
+    totalVendidoM,
+    unidadesVendidasM,
+    ventasPorCiudadM,
+    totalPorCiudad,
+    unidadesPorProducto,
+    topProductosPorValor,
+    ventasDelDia,
+    totalPorCiudadI,
+    totalVendidoI,
+    ventaMayorI,
+    clientesRecurrentes,
+    ciudadUnaPasada
+  };
