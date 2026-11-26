@@ -23,16 +23,15 @@ const {
 
 const generador = require("./generador");
 
-const ventasGeneradas = generador(10.000);
+const ventasGeneradas = generador(8000);
 
 console.time("Timer")
 
-console.log(clientesRecurrentes(ventasGeneradas))
+console.log(ventasPorCiudadM(ventasGeneradas, "medellín"))
 
 console.timeEnd("Timer")
 
 console.log(ciudadUnaPasada(ventasGeneradas, "medellín"))
-console.log(ventasPorCiudadM(ventasGeneradas, "medellín"))
 
 
 totalPorCiudadI(ventasGeneradas, contador)
